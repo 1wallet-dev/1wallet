@@ -13,6 +13,7 @@ const config = require('../config')
 const unit = require('ethjs-unit')
 const ONEUtil = require('../lib/util')
 const ONEConstants = require('../lib/constants')
+const ONEParser = require('../lib/parser')
 const ONE = require('../lib/onewallet')
 const ONEWallet = require('../lib/onewallet')
 const BN = require('bn.js')
@@ -163,6 +164,17 @@ const executeTokenTransaction = async ({
 }
 
 // ==== Validation Helpers ====
+
+// ==== Validation Helpers ====
+const validateEvent = async ({ tx, expectedEvent, expectedData }) => {
+  const events = ONEParser.parseTxLog(tx?.receipt?.rawLogs)
+  const event = events.filter(e => e.eventName === expectedEvent)[0]
+  const eventName = event?.eventName
+  const data = event?.data
+  if (expectedEvent) { assert.deepStrictEqual(expectedEvent, eventName, 'Expected event not triggered') }
+  if (expectedData) { assert.deepStrictEqual(expectedData, data, 'Expected event data is different') }
+}
+
 const validatetokenBalances = async ({
   receivers = [],
   tokenTypes = [],
@@ -240,7 +252,7 @@ contract('ONEWallet', (accounts) => {
     let testTime = Date.now()
 
     testTime = await TestUtil.bumpTestTime(testTime, 60)
-    let { currentState: aliceCurrentState } = await executeTokenTransaction(
+    let { tx, currentState: aliceCurrentState } = await executeTokenTransaction(
       {
         ...NullOperationParams, // Default all fields to Null values than override
         walletInfo: alice,
@@ -250,6 +262,8 @@ contract('ONEWallet', (accounts) => {
         testTime
       }
     )
+    const expectedData = { 0: ONEConstants.TokenType.ERC20.toString(), 1: testerc20.address, 2: '0' }
+    await validateEvent({ tx, expectedEvent: 'TokenTracked', expectedData })
 
     // Alice Items that have changed - nonce, lastOperationTime, commits, trackedTokens
     aliceOldState = await TestUtil.updateOldTxnInfo({ wallet: alice.wallet, oldState: aliceOldState })
@@ -824,6 +838,60 @@ contract('ONEWallet', (accounts) => {
   })
 
   // Event Testing
+
+  // ====== UNTRACK ======
+  // Test untracking of an ERC721 token
+  // Expected result the token is no longer tracked
+  it('TN.EVENT.1 UNTRACK.TokenNotFound: check error is emitted if token doesnt exist', async () => {
+    // create wallets and token contracts used througout the tests
+    let { walletInfo: alice, walletOldState: aliceOldState } = await TestUtil.makeWallet({ salt: 'TN.POSITIVE.1.1', deployer: accounts[0], effectiveTime: EFFECTIVE_TIME, duration: DURATION })
+    // make Tokens
+    const { testerc721 } = await TestUtil.makeTokens({ deployer: accounts[0], makeERC20: false, makeERC721: true, makeERC1155: false })
+
+    // Begin Tests
+    let testTime = Date.now()
+
+    // // Need to track a token before untracking
+    // testTime = await TestUtil.bumpTestTime(testTime, 60)
+    // let { currentState: aliceCurrentStateTracked } = await executeTokenTransaction(
+    //   {
+    //     ...NullOperationParams, // Default all fields to Null values than override
+    //     walletInfo: alice,
+    //     operationType: ONEConstants.OperationType.TRACK,
+    //     tokenType: ONEConstants.TokenType.ERC721,
+    //     contractAddress: testerc721.address,
+    //     tokenId: 3,
+    //     testTime
+    //   }
+    // )
+    // Update alice current State
+    // aliceOldState = aliceCurrentStateTracked
+
+    testTime = await TestUtil.bumpTestTime(testTime, 60)
+    // eslint-disable-next-line no-lone-blocks
+    let { tx, currentState: aliceCurrentStateUntracked } = await executeTokenTransaction(
+      {
+        ...NullOperationParams, // Default all fields to Null values than override
+        walletInfo: alice,
+        operationType: ONEConstants.OperationType.UNTRACK,
+        tokenType: ONEConstants.TokenType.ERC721,
+        contractAddress: testerc721.address,
+        tokenId: 3,
+        testTime
+      }
+    )
+
+    const expectedData = { 0: ONEConstants.TokenType.ERC721.toString(), 1: testerc721.address, 2: new BN('0') }
+    await validateEvent({ tx, expectedEvent: 'TokenNotFound', expectedData })
+
+    // Alice Items that have changed - lastOperationTime, commits, trackedTokens
+    aliceOldState = await TestUtil.updateOldTxnInfo({ wallet: alice.wallet, oldState: aliceOldState, validateNonce: false })
+    // tracked tokens
+    const expectedTrackedTokens = [[], [], [[]]]
+    aliceOldState.trackedTokens = await updateOldTrackedTokens({ expectedTrackedTokens, wallet: alice.wallet })
+    // check alice
+    await TestUtil.checkONEWalletStateChange(aliceOldState, aliceCurrentStateUntracked)
+  })
 
   // Scenario (Complex) Testing
 
