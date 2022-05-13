@@ -57,7 +57,7 @@ const ConnectWallet = ({ caller, callback }) => {
           </Text>
         </Space>
       </AverageRow>
-      {/* <WalletSelectorV2 onAddressSelected={onAddressSelected} filter={e => e.majorVersion >= 10} disabledText={WALLET_OUTDATED_DISABLED_TEXT} showOlderVersions={showOlderVersions} useHex={useHex} /> */}
+      <WalletSelectorV2 onAddressSelected={onAddressSelected} filter={e => e.majorVersion >= 10} disabledText={WALLET_OUTDATED_DISABLED_TEXT} showOlderVersions={showOlderVersions} useHex={useHex} />
       {/* <WalletSelector onAddressSelected={setSelectedAddress} filter={e => e.majorVersion >= 10} disabledText={WALLET_OUTDATED_DISABLED_TEXT} showOlderVersions={showOlderVersions} useHex={useHex} /> */}
       <Space direction='vertical'>
         <Text>Looking for older addresses? <Button type='link' style={{ padding: 0 }} onClick={() => setShowOlderVersions(!showOlderVersions)}>{!showOlderVersions ? 'Show all addresses' : 'Hide old addresses'}</Button>  </Text>
