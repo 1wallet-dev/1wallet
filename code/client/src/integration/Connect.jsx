@@ -5,22 +5,35 @@ import message from '../message'
 import AnimatedSection from '../components/AnimatedSection'
 import { AverageRow } from '../components/Grid'
 import { Li, Ul } from '../components/Text'
+import Paths from '../constants/paths'
 import React, { useState } from 'react'
-import { WALLET_OUTDATED_DISABLED_TEXT, WalletSelector } from './Common'
+import { useRouteMatch, useHistory } from 'react-router'
+import { WALLET_OUTDATED_DISABLED_TEXT, WalletSelector, WalletSelectorV2 } from './Common'
+import { useTheme, getColorPalette } from '../theme'
+import { SecondaryButton } from '../components/Buttons'
 const { Title, Text, Paragraph } = Typography
 const ConnectWallet = ({ caller, callback }) => {
   const [useHex, setUseHex] = useState(false)
   const [selectedAddress, setSelectedAddress] = useState({})
+  const history = useHistory()
+  const onAddressSelected = (e) => {
+    history.push(Paths.showAddress(e.value))
+  }
   const [showOlderVersions, setShowOlderVersions] = useState(false)
   const connect = () => {
     if (!selectedAddress.value) {
       return message.error('No address is selected')
     }
     window.location.href = callback + `?address=${selectedAddress.value}&success=1`
+    console.log(`connect window.location.href: ${window.location.href}`)
   }
   const cancel = () => {
+    console.log(`callback: ${callback}`)
     window.location.href = callback + '?success=0'
+    console.log(`cancel window.location.href: ${window.location.href}`)
   }
+  const theme = useTheme()
+  const { primaryBgColor, secondaryBgColor, secondaryBorderColor } = getColorPalette(theme)
   return (
     <AnimatedSection
       show
@@ -41,7 +54,8 @@ const ConnectWallet = ({ caller, callback }) => {
           </Text>
         </Space>
       </AverageRow>
-      <WalletSelector onAddressSelected={setSelectedAddress} filter={e => e.majorVersion >= 10} disabledText={WALLET_OUTDATED_DISABLED_TEXT} showOlderVersions={showOlderVersions} useHex={useHex} />
+      <WalletSelectorV2 onAddressSelected={onAddressSelected} filter={e => e.majorVersion >= 10} disabledText={WALLET_OUTDATED_DISABLED_TEXT} showOlderVersions={showOlderVersions} useHex={useHex} />
+      {/* <WalletSelector onAddressSelected={setSelectedAddress} filter={e => e.majorVersion >= 10} disabledText={WALLET_OUTDATED_DISABLED_TEXT} showOlderVersions={showOlderVersions} useHex={useHex} /> */}
       <Space direction='vertical'>
         <Text>Looking for older addresses? <Button type='link' style={{ padding: 0 }} onClick={() => setShowOlderVersions(!showOlderVersions)}>{!showOlderVersions ? 'Show all addresses' : 'Hide old addresses'}</Button>  </Text>
         {showOlderVersions && <Text>If you still can't find the old address you are looking for, try first going to "About" tab in the latest version of the wallet, then "Inspect" the old address in the list.</Text>}
