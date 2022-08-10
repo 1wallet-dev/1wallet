@@ -19,6 +19,7 @@ const mapping = {
     dev: 'eth-ganache',
     mainnet: 'harmony-mainnet',
     testnet: 'harmony-testnet',
+    mumbai: 'polygon-testnet'
   }
 }
 

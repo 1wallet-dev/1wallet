@@ -153,6 +153,8 @@ const util = {
   getNetworkExplorerUrl: (address, network) => {
     if (network === 'harmony-testnet') {
       return `https://explorer.pops.one/#/address/${address}`
+    } else if (network === 'polygon-testnet') {
+      return `https://mumbai.polygonscan.com/address/${address}`
     }
 
     return `https://explorer.harmony.one/#/address/${address}`

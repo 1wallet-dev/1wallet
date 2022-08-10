@@ -51,6 +51,17 @@ module.exports = {
         deployer: process.env.DEPLOY_DEPLOYER_TESTNET || '',
         codeHelper: process.env.DEPLOY_CODE_HELPER_TESTNET || '',
       },
+    },
+    'polygon-testnet': {
+      name: 'Mumbai',
+      url: process.env.POLYGON_TESTNET_RPC || 'https://rpc-mumbai.maticvigil.com',
+      explorer: 'https://mumbai.polygonscan.com/tx/{{txId}}',
+      chainId: 2,
+      deploy: {
+        factory: process.env.DEPLOY_FACTORY_POLYGON_TESTNET || '',
+        deployer: process.env.DEPLOY_DEPLOYER_POLYGON_TESTNET || '',
+        codeHelper: process.env.DEPLOY_CODE_HELPER_POLYGON_TESTNET || '',
+      },
     }
   },
   relayers: {

@@ -34,7 +34,12 @@ module.exports = {
       provider: () => config.networks['harmony-mainnet'].key && BuildProvider(config.networks['harmony-mainnet']),
       network_id: config.networks['harmony-mainnet'].networkId,
       gas: config.gasLimit
-    }
+    },
+    'polygon-testnet': {
+      provider: () => config.networks['polygon-testnet'].key && BuildProvider(config.networks['polygon-testnet']),
+      network_id: config.networks['polygon-testnet'].networkId,
+      gas: config.gasLimit
+    },
   },
 
   // Set default mocha options here, use special reporters etc.

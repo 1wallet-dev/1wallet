@@ -12,6 +12,7 @@ const SUFFIXES = {
   'eth-ganache': 'GANACHE',
   'harmony-mainnet': 'MAINNET',
   'harmony-testnet': 'TESTNET',
+  'polygon-testnet': 'MUMBAI'
 }
 
 async function main () {

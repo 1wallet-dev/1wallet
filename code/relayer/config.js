@@ -36,6 +36,16 @@ const config = {
       numAccounts: process.env.MAINNET_NUM_ACCOUNTS || 1,
       blockTime: 2,
     },
+    'polygon-testnet': {
+      key: process.env.POLYGON_TESTNET_KEY || '',
+      beacon: process.env.POLYGON_BEACON_TESTNET_RPC || process.env.POLYGON_TESTNET_RPC,
+      url: process.env.POLYGON_TESTNET_RPC || process.env.POLYGON_BEACON_TESTNET_RPC || 'https://rpc-mumbai.maticvigil.com',
+      wss: process.env.POLYGON_TESTNET_WSS || process.env.POLYGON_BEACON_TESTNET_WSS,
+      mnemonic: process.env.POLYGON_TESTNET_MNEMONIC,
+      skip: process.env.SKIP_POLYGON_TESTNET,
+      numAccounts: process.env.POLYGON_TESTNET_NUM_ACCOUNTS || 1,
+      blockTime: 3,
+    },
     'polygon-mainnet': {
       key: process.env.POLYGON_MAINNET_KEY || '',
       beacon: process.env.POLYGON_BEACON_MAINNET_RPC || process.env.POLYGON_MAINNET_RPC,

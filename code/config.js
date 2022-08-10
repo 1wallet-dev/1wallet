@@ -23,6 +23,16 @@ module.exports = {
       chainId: 1,
       networkId: 1666600000,
     },
+    'polygon-testnet': {
+      key: process.env.POLYGON_TESTNET_KEY || '',
+      url: process.env.POLYGON_TESTNET_RPC || 'https://rpc-mumbai.maticvigil.com',
+      wss: process.env.POLYGON_TESTNET_WSS,
+      mnemonic: process.env.POLYGON_TESTNET_MNEMONIC,
+      skip: process.env.SKIP_TESTNET,
+      numAccounts: process.env.POLYGON_TESTNET_NUM_ACCOUNTS || 1,
+      chainId: 80001,
+      networkId: 80001
+    },
     'eth-ganache': {
       url: process.env.GANACHE_RPC || 'http://127.0.0.1:7545',
       wss: process.env.GANACHE_WSS,
