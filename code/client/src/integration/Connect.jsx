@@ -58,7 +58,7 @@ const ConnectWallet = ({ caller, callback }) => {
         </Space>
       </AverageRow>
       {/* <WalletSelectorV2 onAddressSelected={onAddressSelected} filter={e => e.majorVersion >= 10} disabledText={WALLET_OUTDATED_DISABLED_TEXT} showOlderVersions={showOlderVersions} useHex={useHex} /> */}
-      {/* <WalletSelector onAddressSelected={setSelectedAddress} filter={e => e.majorVersion >= 10} disabledText={WALLET_OUTDATED_DISABLED_TEXT} showOlderVersions={showOlderVersions} useHex={useHex} /> */}
+      <WalletSelector onAddressSelected={setSelectedAddress} filter={e => e.majorVersion >= 10} disabledText={WALLET_OUTDATED_DISABLED_TEXT} showOlderVersions={showOlderVersions} useHex={useHex} />
       <Space direction='vertical'>
         <Text>Looking for older addresses? <Button type='link' style={{ padding: 0 }} onClick={() => setShowOlderVersions(!showOlderVersions)}>{!showOlderVersions ? 'Show all addresses' : 'Hide old addresses'}</Button>  </Text>
         {showOlderVersions && <Text>If you still can't find the old address you are looking for, try first going to "About" tab in the latest version of the wallet, then "Inspect" the old address in the list.</Text>}
