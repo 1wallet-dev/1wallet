@@ -24,7 +24,7 @@ module.exports = {
         // explorer: 'https://explorer.harmony.one/#/tx/{{txId}}',
         deploy: {
           factory: process.env.DEPLOY_FACTORY_GANACHE,
-          deployer: process.env.DEPLOY_DEPLOYER_GANACHE,
+          deployer: process.env.DEPLOY_FACTORY_HELPER_GANACHE,
           codeHelper: process.env.DEPLOY_CODE_HELPER_GANACHE
         },
       }
@@ -37,7 +37,7 @@ module.exports = {
       chainId: 1,
       deploy: {
         factory: process.env.DEPLOY_FACTORY_MAINNET || '',
-        deployer: process.env.DEPLOY_DEPLOYER_MAINNET || '',
+        deployer: process.env.DEPLOY_FACTORY_HELPER_MAINNET || '',
         codeHelper: process.env.DEPLOY_CODE_HELPER_MAINNET || '',
       },
     },
@@ -48,7 +48,7 @@ module.exports = {
       chainId: 2,
       deploy: {
         factory: process.env.DEPLOY_FACTORY_TESTNET || '',
-        deployer: process.env.DEPLOY_DEPLOYER_TESTNET || '',
+        deployer: process.env.DEPLOY_FACTORY_HELPER_TESTNET || '',
         codeHelper: process.env.DEPLOY_CODE_HELPER_TESTNET || '',
       },
     }

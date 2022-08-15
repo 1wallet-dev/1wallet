@@ -41,7 +41,7 @@ Please also don't forget to delete the all cached address/hash files (`rm code/r
 
 ```
 DEPLOY_FACTORY_GANACHE=<...>
-DEPLOY_DEPLOYER_GANACHE=<...>
+DEPLOY_FACTORY_HELPER_GANACHE=<...>
 DEPLOY_CODE_HELPER_GANACHE=<...>
 ```
 

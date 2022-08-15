@@ -4,7 +4,7 @@ const CACHE = process.env.CACHE || './relayer/cache'
 const VERSION = process.env.CACHE || 'v0.16.1'
 const VARS = {
   DEPLOY_FACTORY: 'ONEWalletFactory',
-  DEPLOY_DEPLOYER: 'ONEWalletFactoryHelper',
+  DEPLOY_FACTORY_HELPER: 'ONEWalletFactoryHelper',
   DEPLOY_CODE_HELPER: 'ONEWalletCodeHelper',
 }
 
