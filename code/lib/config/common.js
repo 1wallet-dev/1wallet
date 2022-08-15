@@ -20,8 +20,9 @@ module.exports = {
     ...(DEBUG && {
       'eth-ganache': {
         name: 'Ganache',
-        url: process.env.GANACHE_RPC || 'http://127.0.0.1:7545',
+        url: process.env.GANACHE_RPC || 'http://127.0.0.1:8545',
         // explorer: 'https://explorer.harmony.one/#/tx/{{txId}}',
+        chainId: 1337,
         deploy: {
           factory: process.env.DEPLOY_FACTORY_GANACHE,
           deployer: process.env.DEPLOY_FACTORY_HELPER_GANACHE,
@@ -57,7 +58,7 @@ module.exports = {
     ...(DEBUG && {
       dev: {
         name: 'Local Relayer',
-        url: process.env.LOCAL_RELAYER_URL || 'https://127.0.0.1:8445'
+        url: process.env.LOCAL_RELAYER_URL || 'https://localhost:8445'
         // url: 'https://dev.hiddenstate.xyz'
       }
     }),

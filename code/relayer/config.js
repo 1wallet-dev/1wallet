@@ -37,7 +37,7 @@ const config = {
       blockTime: 2,
     },
     'eth-ganache': {
-      url: process.env.GANACHE_RPC || 'http://127.0.0.1:7545',
+      url: process.env.GANACHE_RPC || 'http://127.0.0.1:8545',
       wss: process.env.GANACHE_WSS,
       key: process.env.ETH_GANACHE_KEY,
       mnemonic: process.env.ETH_GANACHE_MNEMONIC,

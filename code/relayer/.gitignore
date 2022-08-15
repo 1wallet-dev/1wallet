@@ -3,6 +3,7 @@
 !/certs/gen.sh
 backup.eslintrc.js
 /cache
+/cache_original
 /es.env
 /scripts/es.sh
 /deploy/cp-contracts.sh
